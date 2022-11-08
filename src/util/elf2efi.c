@@ -125,6 +125,34 @@
 #define R_ARM_V4BX 40
 #endif
 
+/* LoongArch */
+#ifndef EM_LOONGARCH
+#define EM_LOONGARCH 258	/* LoongArch */
+#endif
+
+/* Seems to be missing from elf.h */
+#ifndef R_LARCH_NONE
+#define R_LARCH_NONE        0
+#endif
+#ifndef R_LARCH_64
+#define R_LARCH_64          2
+#endif
+#ifndef R_LARCH_B26
+#define R_LARCH_B26         66
+#endif
+#ifndef R_LARCH_PCALA_HI20
+#define R_LARCH_PCALA_HI20  71
+#endif
+#ifndef R_LARCH_PCALA_LO12
+#define R_LARCH_PCALA_LO12  72
+#endif
+#ifndef R_LARCH_GOT_PC_HI20
+#define R_LARCH_GOT_PC_HI20 75
+#endif
+#ifndef R_LARCH_GOT_PC_LO12
+#define R_LARCH_GOT_PC_LO12 76
+#endif
+
 /**
  * Alignment of raw data of sections in the image file
  *
@@ -484,6 +512,9 @@ static void set_machine ( struct elf_file *elf, struct pe_header *pe_header ) {
 	case EM_AARCH64:
 		machine = EFI_IMAGE_MACHINE_AARCH64;
 		break;
+	case EM_LOONGARCH:
+		machine = EFI_IMAGE_MACHINE_LOONGARCH64;
+		break;
 	default:
 		eprintf ( "Unknown ELF architecture %d\n", ehdr->e_machine );
 		exit ( 1 );
@@ -669,6 +700,7 @@ static void process_reloc ( struct elf_file *elf, const Elf_Shdr *shdr,
 		case ELF_MREL ( EM_X86_64, R_X86_64_NONE ) :
 		case ELF_MREL ( EM_AARCH64, R_AARCH64_NONE ) :
 		case ELF_MREL ( EM_AARCH64, R_AARCH64_NULL ) :
+		case ELF_MREL ( EM_LOONGARCH, R_LARCH_NONE ) :
 			/* Ignore dummy relocations used by REQUIRE_SYMBOL() */
 			break;
 		case ELF_MREL ( EM_386, R_386_32 ) :
@@ -678,6 +710,7 @@ static void process_reloc ( struct elf_file *elf, const Elf_Shdr *shdr,
 			break;
 		case ELF_MREL ( EM_X86_64, R_X86_64_64 ) :
 		case ELF_MREL ( EM_AARCH64, R_AARCH64_ABS64 ) :
+		case ELF_MREL ( EM_LOONGARCH, R_LARCH_64 ) :
 			/* Generate an 8-byte PE relocation */
 			generate_pe_reloc ( pe_reltab, offset, 8 );
 			break;
@@ -698,6 +731,11 @@ static void process_reloc ( struct elf_file *elf, const Elf_Shdr *shdr,
 		case ELF_MREL ( EM_AARCH64, R_AARCH64_LDST16_ABS_LO12_NC ) :
 		case ELF_MREL ( EM_AARCH64, R_AARCH64_LDST32_ABS_LO12_NC ) :
 		case ELF_MREL ( EM_AARCH64, R_AARCH64_LDST64_ABS_LO12_NC ) :
+		case ELF_MREL ( EM_LOONGARCH, R_LARCH_B26):
+		case ELF_MREL ( EM_LOONGARCH, R_LARCH_PCALA_HI20 ):
+		case ELF_MREL ( EM_LOONGARCH, R_LARCH_PCALA_LO12 ):
+		case ELF_MREL ( EM_LOONGARCH, R_LARCH_GOT_PC_HI20 ):
+		case ELF_MREL ( EM_LOONGARCH, R_LARCH_GOT_PC_LO12 ):
 			/* Skip PC-relative relocations; all relative
 			 * offsets remain unaltered when the object is
 			 * loaded.
