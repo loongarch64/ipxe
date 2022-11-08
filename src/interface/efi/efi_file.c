@@ -760,8 +760,8 @@ static EFI_STATUS EFIAPI
 efi_block_io_read_blocks ( EFI_BLOCK_IO_PROTOCOL *this __unused, UINT32 MediaId,
 			   EFI_LBA lba, UINTN len, VOID *data ) {
 
-	DBGC ( &efi_file_root, "EFIFILE block read ID %#08x LBA %#08"INT64_MODIFIER"x -> "
-	       "%p+%zx\n", MediaId, ( ( unsigned long long ) lba ),
+	DBGC ( &efi_file_root, "EFIFILE block read ID %#08x LBA %#08"UINT64_FORMAT"x -> "
+	       "%p+%zx\n", MediaId, ( ( uint64_t ) lba ),
 	       data, ( ( size_t ) len ) );
 	return EFI_NO_MEDIA;
 }
@@ -772,8 +772,8 @@ efi_block_io_write_blocks ( EFI_BLOCK_IO_PROTOCOL *this __unused,
 			    UINT32 MediaId, EFI_LBA lba, UINTN len,
 			    VOID *data ) {
 
-	DBGC ( &efi_file_root, "EFIFILE block write ID %#08x LBA %#08"INT64_MODIFIER"x <- "
-	       "%p+%zx\n", MediaId, ( ( unsigned long long ) lba ),
+	DBGC ( &efi_file_root, "EFIFILE block write ID %#08x LBA %#08"UINT64_FORMAT"x <- "
+	       "%p+%zx\n", MediaId, ( ( uint64_t ) lba ),
 	       data, ( ( size_t ) len ) );
 	return EFI_NO_MEDIA;
 }
@@ -810,7 +810,7 @@ efi_disk_io_read_disk ( EFI_DISK_IO_PROTOCOL *this __unused, UINT32 MediaId,
 			UINT64 offset, UINTN len, VOID *data ) {
 
 	DBGC ( &efi_file_root, "EFIFILE disk read ID %#08x offset %#08"INT64_MODIFIER"x -> "
-	       "%p+%zx\n", MediaId, ( ( unsigned long long ) offset ),
+	       "%p+%zx\n", MediaId, ( ( uint64_t ) offset ),
 	       data, ( ( size_t ) len ) );
 	return EFI_NO_MEDIA;
 }
@@ -821,7 +821,7 @@ efi_disk_io_write_disk ( EFI_DISK_IO_PROTOCOL *this __unused, UINT32 MediaId,
 			 UINT64 offset, UINTN len, VOID *data ) {
 
 	DBGC ( &efi_file_root, "EFIFILE disk write ID %#08x offset %#08"INT64_MODIFIER"x <- "
-	       "%p+%zx\n", MediaId, ( ( unsigned long long ) offset ),
+	       "%p+%zx\n", MediaId, ( ( uint64_t ) offset ),
 	       data, ( ( size_t ) len ) );
 	return EFI_NO_MEDIA;
 }

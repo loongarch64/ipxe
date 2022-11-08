@@ -337,7 +337,7 @@ efi_get_memory_map_wrapper ( UINTN *memory_map_size,
 		      remaining >= *descriptor_size ;
 		      desc = ( ( ( void * ) desc ) + *descriptor_size ),
 		      remaining -= *descriptor_size ) {
-			DBGC2 ( colour, "%#016llx+%#08llx %#016llx "
+			DBGC2 ( colour, "%#016"UINT64_FORMAT"x+%#08"UINT64_FORMAT"x %#016"UINT64_FORMAT"x "
 				"%s\n", desc->PhysicalStart,
 				( desc->NumberOfPages * EFI_PAGE_SIZE ),
 				desc->Attribute,
@@ -799,7 +799,7 @@ efi_get_next_monotonic_count_wrapper ( UINT64 *count ) {
 
 	DBGCP ( colour, "GetNextMonotonicCount() " );
 	efirc = bs->GetNextMonotonicCount ( count );
-	DBGCP ( colour, "= %s ( %#llx ) -> %p\n",
+	DBGCP ( colour, "= %s ( %#"UINT64_FORMAT"x ) -> %p\n",
 		efi_status ( efirc ), *count, retaddr );
 	return efirc;
 }
@@ -833,9 +833,9 @@ efi_set_watchdog_timer_wrapper ( UINTN timeout, UINT64 watchdog_code,
 	void *retaddr = __builtin_return_address ( 0 );
 	EFI_STATUS efirc;
 
-	DBGC ( colour, "SetWatchdogTimer ( %lds, %#llx, %#llx, %p ) ",
+	DBGC ( colour, "SetWatchdogTimer ( %lds, %#"UINT64_FORMAT"x, %#"UINT64_FORMAT"x, %p ) ",
 	       ( ( unsigned long ) timeout ), watchdog_code,
-	       ( ( unsigned long long ) data_size ), watchdog_data );
+	       ( ( uint64_t ) data_size ), watchdog_data );
 	efirc = bs->SetWatchdogTimer ( timeout, watchdog_code, data_size,
 				       watchdog_data );
 	DBGC ( colour, "= %s -> %p\n", efi_status ( efirc ), retaddr );

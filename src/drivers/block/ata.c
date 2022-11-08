@@ -512,7 +512,7 @@ static int atadev_command ( struct ata_device *atadev,
 		"count %04x\n", atadev, atacmd->tag, atacmd->type->name,
 		command.cb.cmd_stat, command.cb.device,
 		( command.cb.lba48 ? "48" : "" ),
-		( unsigned long long ) command.cb.lba.native,
+		( uint64_t ) command.cb.lba.native,
 		command.cb.count.native );
 
 	/* Attach to parent interface, mortalise self, and return */
