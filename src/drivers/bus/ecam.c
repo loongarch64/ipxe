@@ -154,14 +154,14 @@ static int ecam_access ( struct pci_device *pci ) {
 	ecam.regs = ioremap ( base, len );
 	if ( ! ecam.regs ) {
 		DBGC ( &ecam, "ECAM %04x:[%02x-%02x] could not map "
-		       "[%08"UINT64_FORMAT"x,%08"UINT64_FORMAT"x)\n", le16_to_cpu ( ecam.alloc.segment ),
+		       "[%08llx,%08llx)\n", le16_to_cpu ( ecam.alloc.segment ),
 		       ecam.alloc.start, ecam.alloc.end, base, ( base + len ) );
 		rc = -ENODEV;
 		goto err_ioremap;
 	}
 
 	/* Populate cached mapping */
-	DBGC ( &ecam, "ECAM %04x:[%02x-%02x] mapped [%08"UINT64_FORMAT"x,%08"UINT64_FORMAT"x) -> %p\n",
+	DBGC ( &ecam, "ECAM %04x:[%02x-%02x] mapped [%08llx,%08llx) -> %p\n",
 	       le16_to_cpu ( ecam.alloc.segment ), ecam.alloc.start,
 	       ecam.alloc.end, base, ( base + len ), ecam.regs );
 	return 0;
