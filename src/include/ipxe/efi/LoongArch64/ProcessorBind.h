@@ -1,7 +1,7 @@
 /** @file
   Processor or Compiler specific defines and types for LoongArch
 
-  Copyright (c) 2022, Loongson Technology Corporation Limited. All rights reserved.<BR>
+  Copyright (c) 2022, Loongson Technology Corporation Limited. All rights reserved.
 
   SPDX-License-Identifier: BSD-2-Clause-Patent
 
