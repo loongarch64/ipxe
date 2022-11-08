@@ -2015,7 +2015,7 @@ static int arbel_map_vpm ( struct arbel *arbel,
 			     pa_l, ( pa >> 12 ) );
 		if ( ( rc = map ( arbel, &mapping ) ) != 0 ) {
 			DBG_ENABLE ( DBGLVL_LOG | DBGLVL_EXTRA );
-			DBGC ( arbel, "Arbel %p could not map %08"UINT64_FORMAT"x+%zx to "
+			DBGC ( arbel, "Arbel %p could not map %08llx+%zx to "
 			       "%08lx: %s\n",
 			       arbel, va, size, pa, strerror ( rc ) );
 			return rc;

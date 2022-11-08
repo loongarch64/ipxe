@@ -394,7 +394,7 @@ static void aoecmd_ata_cmd ( struct aoe_command *aoecmd,
 	copy_from_user ( aoeata->data, command->data_out, 0,
 			 command->data_out_len );
 
-	DBGC2 ( aoedev, "AoE %s/%08x ATA cmd %02x:%02x:%02x:%02x:%08"UINT64_FORMAT"x",
+	DBGC2 ( aoedev, "AoE %s/%08x ATA cmd %02x:%02x:%02x:%02x:%08llx",
 		aoedev_name ( aoedev ), aoecmd->tag, aoeata->aflags,
 		aoeata->err_feat, aoeata->count, aoeata->cmd_stat,
 		aoeata->lba.u64 );

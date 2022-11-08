@@ -396,7 +396,7 @@ static void atacmd_identify_done ( struct ata_command *atacmd, int rc ) {
 	capacity.blksize = ATA_SECTOR_SIZE;
 	capacity.max_count = atadev->max_count;
 	DBGC ( atadev, "ATA %p is a %s\n", atadev, ata_model ( identity ) );
-	DBGC ( atadev, "ATA %p has %#"INT64_MODIFIER"x blocks (%ld MB) and uses %s\n",
+	DBGC ( atadev, "ATA %p has %#llx blocks (%ld MB) and uses %s\n",
 	       atadev, capacity.blocks,
 	       ( ( signed long ) ( capacity.blocks >> 11 ) ),
 	       ( atadev->lba48 ? "LBA48" : "LBA" ) );
@@ -508,7 +508,7 @@ static int atadev_command ( struct ata_device *atadev,
 	}
 	atacmd->tag = tag;
 
-	DBGC2 ( atadev, "ATA %p tag %08x %s cmd %02x dev %02x LBA%s %08"UINT64_FORMAT"x "
+	DBGC2 ( atadev, "ATA %p tag %08x %s cmd %02x dev %02x LBA%s %08llx "
 		"count %04x\n", atadev, atacmd->tag, atacmd->type->name,
 		command.cb.cmd_stat, command.cb.device,
 		( command.cb.lba48 ? "48" : "" ),

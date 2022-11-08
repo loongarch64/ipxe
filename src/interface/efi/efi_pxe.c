@@ -934,7 +934,7 @@ efi_pxe_mtftp ( EFI_PXE_BASE_CODE_PROTOCOL *base,
 	struct efi_pxe *pxe = container_of ( base, struct efi_pxe, base );
 	int rc;
 
-	DBGC ( pxe, "PXE %s MTFTP %d%s %p+%"UINT64_FORMAT"x", pxe->name, opcode,
+	DBGC ( pxe, "PXE %s MTFTP %d%s %p+%llx", pxe->name, opcode,
 	       ( overwrite ? " overwrite" : "" ), data, *len );
 	if ( blksize )
 		DBGC ( pxe, " blksize %zd", ( ( size_t ) *blksize ) );

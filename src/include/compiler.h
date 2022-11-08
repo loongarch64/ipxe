@@ -449,22 +449,6 @@ char __debug_disable(OBJECT) = ( DBGLVL_MAX & ~DBGLVL_DFLT );
 		}						\
 	} while ( 0 )
 
-#if __SIZEOF_INT__ == 8
-# define    INT64_MODIFIER  ""
-# define    INT64_FORMAT    "i"
-# define    UINT64_FORMAT   "u"
-#elif __SIZEOF_LONG__ == 8
-# define    INT64_MODIFIER  "l"
-# define    INT64_FORMAT    "li"
-# define    UINT64_FORMAT   "lu"
-#elif __SIZEOF_LONG_LONG__ == 8
-# define    INT64_MODIFIER  "ll"
-# define    INT64_FORMAT    "lli"
-# define    UINT64_FORMAT   "llu"
-#else
-#error "Compiler provides no native 64-bit integer type"
-#endif
-
 /* Autocolourising versions of the DBGxxx_IF() macros */
 
 #define DBGC_IF( level, id, ... ) do {				\

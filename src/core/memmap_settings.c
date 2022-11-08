@@ -184,12 +184,12 @@ static int memmap_settings_fetch ( struct settings *settings,
 		region = &memmap.regions[i];
 		if ( include_start ) {
 			result += region->start;
-			DBGC ( settings, "MEMMAP %d start %08"UINT64_FORMAT"x\n",
+			DBGC ( settings, "MEMMAP %d start %08llx\n",
 			       i, region->start );
 		}
 		if ( include_length ) {
 			result += ( region->end - region->start );
-			DBGC ( settings, "MEMMAP %d length %08"UINT64_FORMAT"x\n",
+			DBGC ( settings, "MEMMAP %d length %08llx\n",
 			       i, ( region->end - region->start ) );
 		}
 	}

@@ -414,14 +414,14 @@ static struct io_buffer * ccmp_decrypt ( struct net80211_crypto *crypto,
 
 	if ( pn_to_u64 ( rx_pn ) <= ctx->rx_seq ) {
 		DBGC ( ctx, "WPA-CCMP %p: packet received out of order "
-		       "(%012"UINT64_FORMAT"x <= %012"UINT64_FORMAT"x)\n", ctx, pn_to_u64 ( rx_pn ),
+		       "(%012llx <= %012llx)\n", ctx, pn_to_u64 ( rx_pn ),
 		       ctx->rx_seq );
 		free_iob ( iob );
 		return NULL;
 	}
 
 	ctx->rx_seq = pn_to_u64 ( rx_pn );
-	DBGC2 ( ctx, "WPA-CCMP %p: RX packet number %012"UINT64_FORMAT"x\n", ctx, ctx->rx_seq );
+	DBGC2 ( ctx, "WPA-CCMP %p: RX packet number %012llx\n", ctx, ctx->rx_seq );
 
 	/* Form nonce */
 	nonce.prio = 0;

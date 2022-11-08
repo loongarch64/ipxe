@@ -347,7 +347,7 @@ efi_file_open ( EFI_FILE_PROTOCOL *this, EFI_FILE_PROTOCOL **new,
 
 	/* Fail unless opening read-only */
 	if ( mode != EFI_FILE_MODE_READ ) {
-		DBGC ( file, "EFIFILE %s cannot be opened in mode %#08"INT64_MODIFIER"x\n",
+		DBGC ( file, "EFIFILE %s cannot be opened in mode %#08llx\n",
 		       name, mode );
 		return EFI_WRITE_PROTECTED;
 	}
@@ -576,7 +576,7 @@ static EFI_STATUS EFIAPI efi_file_set_position ( EFI_FILE_PROTOCOL *this,
 	 * we do not support writes).
 	 */
 	if ( position > len ) {
-		DBGC ( file, "EFIFILE %s cannot seek to %#08"INT64_MODIFIER"x of %#08zx\n",
+		DBGC ( file, "EFIFILE %s cannot seek to %#08llx of %#08zx\n",
 		       efi_file_name ( file ), position, len );
 		return EFI_UNSUPPORTED;
 	}
@@ -760,7 +760,7 @@ static EFI_STATUS EFIAPI
 efi_block_io_read_blocks ( EFI_BLOCK_IO_PROTOCOL *this __unused, UINT32 MediaId,
 			   EFI_LBA lba, UINTN len, VOID *data ) {
 
-	DBGC ( &efi_file_root, "EFIFILE block read ID %#08x LBA %#08"INT64_MODIFIER"x -> "
+	DBGC ( &efi_file_root, "EFIFILE block read ID %#08x LBA %#08llx -> "
 	       "%p+%zx\n", MediaId, ( ( unsigned long long ) lba ),
 	       data, ( ( size_t ) len ) );
 	return EFI_NO_MEDIA;
@@ -772,7 +772,7 @@ efi_block_io_write_blocks ( EFI_BLOCK_IO_PROTOCOL *this __unused,
 			    UINT32 MediaId, EFI_LBA lba, UINTN len,
 			    VOID *data ) {
 
-	DBGC ( &efi_file_root, "EFIFILE block write ID %#08x LBA %#08"INT64_MODIFIER"x <- "
+	DBGC ( &efi_file_root, "EFIFILE block write ID %#08x LBA %#08llx <- "
 	       "%p+%zx\n", MediaId, ( ( unsigned long long ) lba ),
 	       data, ( ( size_t ) len ) );
 	return EFI_NO_MEDIA;
@@ -809,7 +809,7 @@ static EFI_STATUS EFIAPI
 efi_disk_io_read_disk ( EFI_DISK_IO_PROTOCOL *this __unused, UINT32 MediaId,
 			UINT64 offset, UINTN len, VOID *data ) {
 
-	DBGC ( &efi_file_root, "EFIFILE disk read ID %#08x offset %#08"INT64_MODIFIER"x -> "
+	DBGC ( &efi_file_root, "EFIFILE disk read ID %#08x offset %#08llx -> "
 	       "%p+%zx\n", MediaId, ( ( unsigned long long ) offset ),
 	       data, ( ( size_t ) len ) );
 	return EFI_NO_MEDIA;
@@ -820,7 +820,7 @@ static EFI_STATUS EFIAPI
 efi_disk_io_write_disk ( EFI_DISK_IO_PROTOCOL *this __unused, UINT32 MediaId,
 			 UINT64 offset, UINTN len, VOID *data ) {
 
-	DBGC ( &efi_file_root, "EFIFILE disk write ID %#08x offset %#08"INT64_MODIFIER"x <- "
+	DBGC ( &efi_file_root, "EFIFILE disk write ID %#08x offset %#08llx <- "
 	       "%p+%zx\n", MediaId, ( ( unsigned long long ) offset ),
 	       data, ( ( size_t ) len ) );
 	return EFI_NO_MEDIA;

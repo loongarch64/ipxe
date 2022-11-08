@@ -501,7 +501,7 @@ static int nfs_deliver ( struct nfs_request *nfs,
 				goto err;
 
 			if ( nfs->file_offset == 0 ) {
-				DBGC2 ( nfs, "NFS_OPEN %p size: %"UINT64_FORMAT"u bytes\n",
+				DBGC2 ( nfs, "NFS_OPEN %p size: %llu bytes\n",
 				        nfs, read_reply.filesize );
 
 				xfer_seek ( &nfs->xfer, read_reply.filesize );

@@ -2328,7 +2328,7 @@ static int hermon_map_vpm ( struct hermon *hermon,
 			     pa_l, ( pa >> 12 ) );
 		if ( ( rc = map ( hermon, &mapping ) ) != 0 ) {
 			DBG_ENABLE ( DBGLVL_LOG | DBGLVL_EXTRA );
-			DBGC ( hermon, "Hermon %p could not map %08"UINT64_FORMAT"x+%zx to "
+			DBGC ( hermon, "Hermon %p could not map %08llx+%zx to "
 			       "%08lx: %s\n",
 			       hermon, va, size, pa, strerror ( rc ) );
 			return rc;
@@ -2576,7 +2576,7 @@ static int hermon_map_icm ( struct hermon *hermon,
 		     ( icm_offset >> 5 ),
 		     qpc_eec_cqc_eqc_rdb_parameters.log_num_of_qp,
 		     log_num_qps );
-	DBGC ( hermon, "Hermon %p ICM QPC is %d x %#zx at [%08"UINT64_FORMAT"x,%08"UINT64_FORMAT"x)\n",
+	DBGC ( hermon, "Hermon %p ICM QPC is %d x %#zx at [%08llx,%08llx)\n",
 	       hermon, ( 1 << log_num_qps ), hermon->cap.qpc_entry_size,
 	       icm_offset, ( icm_offset + len ) );
 	icm_offset += len;
@@ -2590,7 +2590,7 @@ static int hermon_map_icm ( struct hermon *hermon,
 	MLX_FILL_1 ( init_hca, 25,
 		     qpc_eec_cqc_eqc_rdb_parameters.altc_base_addr_l,
 		     icm_offset );
-	DBGC ( hermon, "Hermon %p ICM ALTC is %d x %#zx at [%08"UINT64_FORMAT"x,%08"UINT64_FORMAT"x)\n",
+	DBGC ( hermon, "Hermon %p ICM ALTC is %d x %#zx at [%08llx,%08llx)\n",
 	       hermon, ( 1 << log_num_qps ), hermon->cap.altc_entry_size,
 	       icm_offset, ( icm_offset + len ) );
 	icm_offset += len;
@@ -2604,7 +2604,7 @@ static int hermon_map_icm ( struct hermon *hermon,
 	MLX_FILL_1 ( init_hca, 29,
 		     qpc_eec_cqc_eqc_rdb_parameters.auxc_base_addr_l,
 		     icm_offset );
-	DBGC ( hermon, "Hermon %p ICM AUXC is %d x %#zx at [%08"UINT64_FORMAT"x,%08"UINT64_FORMAT"x)\n",
+	DBGC ( hermon, "Hermon %p ICM AUXC is %d x %#zx at [%08llx,%08llx)\n",
 	       hermon, ( 1 << log_num_qps ), hermon->cap.auxc_entry_size,
 	       icm_offset, ( icm_offset + len ) );
 	icm_offset += len;
@@ -2620,7 +2620,7 @@ static int hermon_map_icm ( struct hermon *hermon,
 		     ( icm_offset >> 5 ),
 		     qpc_eec_cqc_eqc_rdb_parameters.log_num_of_srq,
 		     log_num_srqs );
-	DBGC ( hermon, "Hermon %p ICM SRQC is %d x %#zx at [%08"UINT64_FORMAT"x,%08"UINT64_FORMAT"x)\n",
+	DBGC ( hermon, "Hermon %p ICM SRQC is %d x %#zx at [%08llx,%08llx)\n",
 	       hermon, ( 1 << log_num_srqs ), hermon->cap.srqc_entry_size,
 	       icm_offset, ( icm_offset + len ) );
 	icm_offset += len;
@@ -2636,7 +2636,7 @@ static int hermon_map_icm ( struct hermon *hermon,
 		     ( icm_offset >> 5 ),
 		     qpc_eec_cqc_eqc_rdb_parameters.log_num_of_cq,
 		     log_num_cqs );
-	DBGC ( hermon, "Hermon %p ICM CQC is %d x %#zx at [%08"UINT64_FORMAT"x,%08"UINT64_FORMAT"x)\n",
+	DBGC ( hermon, "Hermon %p ICM CQC is %d x %#zx at [%08llx,%08llx)\n",
 	       hermon, ( 1 << log_num_cqs ), hermon->cap.cqc_entry_size,
 	       icm_offset, ( icm_offset + len ) );
 	icm_offset += len;
@@ -2652,7 +2652,7 @@ static int hermon_map_icm ( struct hermon *hermon,
 		     ( icm_offset >> 5 ),
 		     qpc_eec_cqc_eqc_rdb_parameters.log_num_of_eq,
 		     log_num_eqs );
-	DBGC ( hermon, "Hermon %p ICM EQC is %d x %#zx at [%08"UINT64_FORMAT"x,%08"UINT64_FORMAT"x)\n",
+	DBGC ( hermon, "Hermon %p ICM EQC is %d x %#zx at [%08llx,%08llx)\n",
 	       hermon, ( 1 << log_num_eqs ), hermon->cap.eqc_entry_size,
 	       icm_offset, ( icm_offset + len ) );
 	icm_offset += len;
@@ -2664,7 +2664,7 @@ static int hermon_map_icm ( struct hermon *hermon,
 		     tpt_parameters.mtt_base_addr_h, ( icm_offset >> 32 ) );
 	MLX_FILL_1 ( init_hca, 65,
 		     tpt_parameters.mtt_base_addr_l, icm_offset );
-	DBGC ( hermon, "Hermon %p ICM MTT is %d x %#zx at [%08"UINT64_FORMAT"x,%08"UINT64_FORMAT"x)\n",
+	DBGC ( hermon, "Hermon %p ICM MTT is %d x %#zx at [%08llx,%08llx)\n",
 	       hermon, ( 1 << log_num_mtts ), hermon->cap.mtt_entry_size,
 	       icm_offset, ( icm_offset + len ) );
 	icm_offset += len;
@@ -2678,7 +2678,7 @@ static int hermon_map_icm ( struct hermon *hermon,
 		     tpt_parameters.dmpt_base_adr_l, icm_offset );
 	MLX_FILL_1 ( init_hca, 62,
 		     tpt_parameters.log_dmpt_sz, log_num_mpts );
-	DBGC ( hermon, "Hermon %p ICM DMPT is %d x %#zx at [%08"UINT64_FORMAT"x,%08"UINT64_FORMAT"x)\n",
+	DBGC ( hermon, "Hermon %p ICM DMPT is %d x %#zx at [%08llx,%08llx)\n",
 	       hermon, ( 1 << log_num_mpts ), hermon->cap.dmpt_entry_size,
 	       icm_offset, ( icm_offset + len ) );
 	icm_offset += len;
@@ -2698,7 +2698,7 @@ static int hermon_map_icm ( struct hermon *hermon,
 		     multicast_parameters.log_mc_table_hash_sz, log_num_mcs );
 	MLX_FILL_1 ( init_hca, 54,
 		     multicast_parameters.log_mc_table_sz, log_num_mcs );
-	DBGC ( hermon, "Hermon %p ICM MC is %d x %#zx at [%08"UINT64_FORMAT"x,%08"UINT64_FORMAT"x)\n",
+	DBGC ( hermon, "Hermon %p ICM MC is %d x %#zx at [%08llx,%08llx)\n",
 	       hermon, ( 1 << log_num_mcs ),
 	       sizeof ( struct hermonprm_mcg_entry ),
 	       icm_offset, ( icm_offset + len ) );
@@ -2767,7 +2767,7 @@ static int hermon_map_icm ( struct hermon *hermon,
 
 	/* MAP ICM area */
 	for ( i = 0 ; i < HERMON_ICM_NUM_REGIONS ; i++ ) {
-		DBGC ( hermon, "Hermon %p mapping ICM %"UINT64_FORMAT"x+%zx => %08lx\n",
+		DBGC ( hermon, "Hermon %p mapping ICM %llx+%zx => %08lx\n",
 		       hermon, hermon->icm_map[i].offset,
 		       hermon->icm_map[i].len, icm_phys );
 		if ( ( rc = hermon_map_vpm ( hermon, hermon_cmd_map_icm,

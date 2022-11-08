@@ -206,8 +206,8 @@ static void sha512_digest ( struct sha512_context *context ) {
 		*c = *b;
 		*b = *a;
 		*a = ( t1 + t2 );
-		DBGC2 ( context, "%2d : %016"UINT64_FORMAT"x %016"UINT64_FORMAT"x %016"UINT64_FORMAT"x %016"UINT64_FORMAT"x "
-			"%016"UINT64_FORMAT"x %016"UINT64_FORMAT"x %016"UINT64_FORMAT"x %016"UINT64_FORMAT"x\n",
+		DBGC2 ( context, "%2d : %016llx %016llx %016llx %016llx "
+			"%016llx %016llx %016llx %016llx\n",
 			i, *a, *b, *c, *d, *e, *f, *g, *h );
 	}
 

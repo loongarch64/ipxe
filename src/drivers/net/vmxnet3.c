@@ -490,7 +490,7 @@ static int vmxnet3_open ( struct net_device *netdev ) {
 	queues->rx.cfg.num_desc[0] = cpu_to_le32 ( VMXNET3_NUM_RX_DESC );
 	queues->rx.cfg.num_comp = cpu_to_le32 ( VMXNET3_NUM_RX_COMP );
 	queues_bus = virt_to_bus ( queues );
-	DBGC ( vmxnet, "VMXNET3 %p queue descriptors at %08"UINT64_FORMAT"x+%zx\n",
+	DBGC ( vmxnet, "VMXNET3 %p queue descriptors at %08llx+%zx\n",
 	       vmxnet, queues_bus, sizeof ( *queues ) );
 
 	/* Populate shared area */
@@ -511,7 +511,7 @@ static int vmxnet3_open ( struct net_device *netdev ) {
 					       VMXNET3_RXM_BCAST |
 					       VMXNET3_RXM_ALL_MULTI );
 	shared_bus = virt_to_bus ( shared );
-	DBGC ( vmxnet, "VMXNET3 %p shared area at %08"UINT64_FORMAT"x+%zx\n",
+	DBGC ( vmxnet, "VMXNET3 %p shared area at %08llx+%zx\n",
 	       vmxnet, shared_bus, sizeof ( *shared ) );
 
 	/* Zero counters */
