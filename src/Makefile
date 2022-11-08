@@ -176,7 +176,10 @@ everything :
 		bin-x86_64-efi/ipxe.efi bin-x86_64-efi/ipxe.efidrv \
 		bin-x86_64-efi/ipxe.efirom \
 		bin-i386-linux/tap.linux bin-x86_64-linux/tap.linux \
-		bin-i386-linux/tests.linux bin-x86_64-linux/tests.linux
+		bin-i386-linux/tests.linux bin-x86_64-linux/tests.linux \
+		bin-loongarch64-efi/ipxe.efi bin-loongarch64-efi/ipxe.efidrv \
+		bin-loongarch64-efi/ipxe.efirom bin-loongarch64-linux/tap.linux \
+		bin-loongarch64-linux/tests.linux
 
 ###############################################################################
 #

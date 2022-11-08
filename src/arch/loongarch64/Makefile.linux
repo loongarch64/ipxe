@@ -1,0 +1,13 @@
+# -*- makefile -*- : Force emacs to use Makefile mode
+
+# Linker script
+#
+LDSCRIPT = arch/loongarch64/scripts/linux.lds
+
+# Fix undefined _ipxe__efi_systab symbol error
+WORKAROUND_LDFLAGS += --defsym _ipxe__efi_systab=_ipxe__linux_systab
+
+# Include generic Linux Makefile
+#
+MAKEDEPS += Makefile.linux
+include Makefile.linux
