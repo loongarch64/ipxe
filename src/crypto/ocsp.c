@@ -560,7 +560,7 @@ static int ocsp_parse_responses ( struct ocsp_check *ocsp,
 		       ocsp, x509_name ( ocsp->cert ), strerror ( rc ) );
 		return rc;
 	}
-	DBGC2 ( ocsp, "OCSP %p \"%s\" this update was at time %lld\n",
+	DBGC2 ( ocsp, "OCSP %p \"%s\" this update was at time %"INT64_FORMAT"d\n",
 		ocsp, x509_name ( ocsp->cert ), response->this_update );
 	asn1_skip_any ( &cursor );
 
@@ -574,7 +574,7 @@ static int ocsp_parse_responses ( struct ocsp_check *ocsp,
 			       x509_name ( ocsp->cert ), strerror ( rc ) );
 			return rc;
 		}
-		DBGC2 ( ocsp, "OCSP %p \"%s\" next update is at time %lld\n",
+		DBGC2 ( ocsp, "OCSP %p \"%s\" next update is at time %"INT64_FORMAT"d\n",
 			ocsp, x509_name ( ocsp->cert ), response->next_update );
 	} else {
 		/* If no nextUpdate is present, this indicates that
@@ -945,15 +945,15 @@ int ocsp_validate ( struct ocsp_check *ocsp, time_t time ) {
 	 */
 	if ( response->this_update > ( time + TIMESTAMP_ERROR_MARGIN ) ) {
 		DBGC ( ocsp, "OCSP %p \"%s\" response is not yet valid (at "
-		       "time %lld)\n", ocsp, x509_name ( ocsp->cert ), time );
+		       "time %"INT64_FORMAT"d)\n", ocsp, x509_name ( ocsp->cert ), time );
 		return -EACCES_STALE;
 	}
 	if ( response->next_update < ( time - TIMESTAMP_ERROR_MARGIN ) ) {
 		DBGC ( ocsp, "OCSP %p \"%s\" response is stale (at time "
-		       "%lld)\n", ocsp, x509_name ( ocsp->cert ), time );
+		       "%"INT64_FORMAT"d)\n", ocsp, x509_name ( ocsp->cert ), time );
 		return -EACCES_STALE;
 	}
-	DBGC2 ( ocsp, "OCSP %p \"%s\" response is valid (at time %lld)\n",
+	DBGC2 ( ocsp, "OCSP %p \"%s\" response is valid (at time %"INT64_FORMAT"d)\n",
 		ocsp, x509_name ( ocsp->cert ), time );
 
 	/* Mark certificate as passing OCSP verification */

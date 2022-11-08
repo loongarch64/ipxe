@@ -299,7 +299,7 @@ static int netvsc_recv_control ( struct vmbus_device *vmdev, uint64_t xid,
 	struct netvsc_device *netvsc = rndis->priv;
 
 	DBGC ( netvsc, "NETVSC %s received unsupported control packet "
-	       "(%08llx):\n", netvsc->name, xid );
+	       "(%08"UINT64_FORMAT"x):\n", netvsc->name, xid );
 	DBGC_HDA ( netvsc, 0, data, len );
 	return -ENOTSUP;
 }
@@ -408,7 +408,7 @@ static int netvsc_recv_completion ( struct vmbus_device *vmdev, uint64_t xid,
 		completion = netvsc_completed;
 	} else {
 		DBGC ( netvsc, "NETVSC %s received unexpected completion "
-		       "(%08llx)\n", netvsc->name, xid );
+		       "(%08"UINT64_FORMAT"x)\n", netvsc->name, xid );
 		return -EPIPE;
 	}
 
@@ -437,7 +437,7 @@ static int netvsc_recv_cancellation ( struct vmbus_device *vmdev,
 	struct netvsc_device *netvsc = rndis->priv;
 
 	DBGC ( netvsc, "NETVSC %s received unsupported cancellation packet "
-	       "(%08llx):\n", netvsc->name, xid );
+	       "(%08"UINT64_FORMAT"x):\n", netvsc->name, xid );
 	return -ENOTSUP;
 }
 

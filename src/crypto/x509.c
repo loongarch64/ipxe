@@ -288,7 +288,7 @@ static int x509_parse_validity ( struct x509_certificate *cert,
 		       cert, strerror ( rc ) );
 		return rc;
 	}
-	DBGC2 ( cert, "X509 %p valid from time %lld\n",
+	DBGC2 ( cert, "X509 %p valid from time %"INT64_FORMAT"d\n",
 		cert, not_before->time );
 	asn1_skip_any ( &cursor );
 
@@ -299,7 +299,7 @@ static int x509_parse_validity ( struct x509_certificate *cert,
 		       cert, strerror ( rc ) );
 		return rc;
 	}
-	DBGC2 ( cert, "X509 %p valid until time %lld\n",
+	DBGC2 ( cert, "X509 %p valid until time %"INT64_FORMAT"d\n",
 		cert, not_after->time );
 
 	return 0;
@@ -1294,17 +1294,17 @@ int x509_check_time ( struct x509_certificate *cert, time_t time ) {
 
 	/* Check validity period */
 	if ( validity->not_before.time > ( time + TIMESTAMP_ERROR_MARGIN ) ) {
-		DBGC ( cert, "X509 %p \"%s\" is not yet valid (at time %lld)\n",
+		DBGC ( cert, "X509 %p \"%s\" is not yet valid (at time %"INT64_FORMAT"d)\n",
 		       cert, x509_name ( cert ), time );
 		return -EACCES_EXPIRED;
 	}
 	if ( validity->not_after.time < ( time - TIMESTAMP_ERROR_MARGIN ) ) {
-		DBGC ( cert, "X509 %p \"%s\" has expired (at time %lld)\n",
+		DBGC ( cert, "X509 %p \"%s\" has expired (at time %"INT64_FORMAT"d)\n",
 		       cert, x509_name ( cert ), time );
 		return -EACCES_EXPIRED;
 	}
 
-	DBGC2 ( cert, "X509 %p \"%s\" is valid (at time %lld)\n",
+	DBGC2 ( cert, "X509 %p \"%s\" is valid (at time %"INT64_FORMAT"d)\n",
 		cert, x509_name ( cert ), time );
 	return 0;
 }

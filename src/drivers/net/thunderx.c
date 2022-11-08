@@ -75,21 +75,21 @@ EFI_REQUEST_PROTOCOL ( EFI_THUNDER_CONFIG_PROTOCOL, &txcfg );
  */
 static __attribute__ (( unused )) void txnic_diag ( struct txnic *vnic ) {
 
-	DBGC ( vnic, "TXNIC %s SQ %05zx(%05llx)/%05zx(%05llx) %08llx\n",
+	DBGC ( vnic, "TXNIC %s SQ %05zx(%05"INT64_MODIFIER"x)/%05zx(%05"INT64_MODIFIER"x) %08"INT64_MODIFIER"x\n",
 	       vnic->name,
 	       ( ( vnic->sq.prod % TXNIC_SQES ) * TXNIC_SQ_STRIDE ),
 	       readq ( vnic->regs + TXNIC_QS_SQ_TAIL(0) ),
 	       ( ( vnic->sq.cons % TXNIC_SQES ) * TXNIC_SQ_STRIDE ),
 	       readq ( vnic->regs + TXNIC_QS_SQ_HEAD(0) ),
 	       readq ( vnic->regs + TXNIC_QS_SQ_STATUS(0) ) );
-	DBGC ( vnic, "TXNIC %s RQ %05zx(%05llx)/%05zx(%05llx) %016llx\n",
+	DBGC ( vnic, "TXNIC %s RQ %05zx(%05"INT64_MODIFIER"x)/%05zx(%05"INT64_MODIFIER"x) %016"INT64_MODIFIER"x\n",
 	       vnic->name,
 	       ( ( vnic->rq.prod % TXNIC_RQES ) * TXNIC_RQ_STRIDE ),
 	       readq ( vnic->regs + TXNIC_QS_RBDR_TAIL(0) ),
 	       ( ( vnic->rq.cons % TXNIC_RQES ) * TXNIC_RQ_STRIDE ),
 	       readq ( vnic->regs + TXNIC_QS_RBDR_HEAD(0) ),
 	       readq ( vnic->regs + TXNIC_QS_RBDR_STATUS0(0) ) );
-	DBGC ( vnic, "TXNIC %s CQ xxxxx(%05llx)/%05x(%05llx) %08llx:%08llx\n",
+	DBGC ( vnic, "TXNIC %s CQ xxxxx(%05"INT64_MODIFIER"x)/%05x(%05"INT64_MODIFIER"x) %08"INT64_MODIFIER"x:%08"INT64_MODIFIER"x\n",
 	       vnic->name, readq ( vnic->regs + TXNIC_QS_CQ_TAIL(0) ),
 	       ( ( vnic->cq.cons % TXNIC_CQES ) * TXNIC_CQ_STRIDE ),
 	       readq ( vnic->regs + TXNIC_QS_CQ_HEAD(0) ),
@@ -757,7 +757,7 @@ txnic_lmac_diag ( struct txnic_lmac *lmac ) {
 	writeq ( BGX_SPU_STATUS2_RCVFLT, ( lmac->regs + BGX_SPU_STATUS2 ) );
 	status1 = readq ( lmac->regs + BGX_SPU_STATUS1 );
 	status2 = readq ( lmac->regs + BGX_SPU_STATUS2 );
-	DBGC ( vnic, "TXNIC %s SPU %02llx:%04llx%s%s%s\n",
+	DBGC ( vnic, "TXNIC %s SPU %02"INT64_MODIFIER"x:%04"INT64_MODIFIER"x%s%s%s\n",
 	       vnic->name, status1, status2,
 	       ( ( status1 & BGX_SPU_STATUS1_FLT ) ? " FLT" : "" ),
 	       ( ( status1 & BGX_SPU_STATUS1_RCV_LNK ) ? " RCV_LNK" : "" ),
@@ -769,7 +769,7 @@ txnic_lmac_diag ( struct txnic_lmac *lmac ) {
 		 ( lmac->regs + BGX_SPU_BR_STATUS2 ) );
 	br_status1 = readq ( lmac->regs + BGX_SPU_BR_STATUS1 );
 	br_status2 = readq ( lmac->regs + BGX_SPU_BR_STATUS2 );
-	DBGC ( vnic, "TXNIC %s BR %04llx:%04llx%s%s%s%s%s\n",
+	DBGC ( vnic, "TXNIC %s BR %04"INT64_MODIFIER"x:%04"INT64_MODIFIER"x%s%s%s%s%s\n",
 	       vnic->name, br_status2, br_status2,
 	       ( ( br_status1 & BGX_SPU_BR_STATUS1_RCV_LNK ) ? " RCV_LNK" : ""),
 	       ( ( br_status1 & BGX_SPU_BR_STATUS1_HI_BER ) ? " HI_BER" : "" ),
@@ -782,19 +782,19 @@ txnic_lmac_diag ( struct txnic_lmac *lmac ) {
 
 	/* Read BASE-R alignment status */
 	br_algn_status = readq ( lmac->regs + BGX_SPU_BR_ALGN_STATUS );
-	DBGC ( vnic, "TXNIC %s BR ALGN %016llx%s\n", vnic->name, br_algn_status,
+	DBGC ( vnic, "TXNIC %s BR ALGN %016"INT64_MODIFIER"x%s\n", vnic->name, br_algn_status,
 	       ( ( br_algn_status & BGX_SPU_BR_ALGN_STATUS_ALIGND ) ?
 		 " ALIGND" : "" ) );
 
 	/* Read BASE-R link training status */
 	br_pmd_status = readq ( lmac->regs + BGX_SPU_BR_PMD_STATUS );
-	DBGC ( vnic, "TXNIC %s BR PMD %04llx\n", vnic->name, br_pmd_status );
+	DBGC ( vnic, "TXNIC %s BR PMD %04"INT64_MODIFIER"x\n", vnic->name, br_pmd_status );
 
 	/* Read autonegotiation status (clearing latching bits) */
 	writeq ( ( BGX_SPU_AN_STATUS_PAGE_RX | BGX_SPU_AN_STATUS_LINK_STATUS ),
 		 ( lmac->regs + BGX_SPU_AN_STATUS ) );
 	an_status = readq ( lmac->regs + BGX_SPU_AN_STATUS );
-	DBGC ( vnic, "TXNIC %s BR AN %04llx%s%s%s%s%s\n", vnic->name, an_status,
+	DBGC ( vnic, "TXNIC %s BR AN %04"INT64_MODIFIER"x%s%s%s%s%s\n", vnic->name, an_status,
 	       ( ( an_status & BGX_SPU_AN_STATUS_XNP_STAT ) ? " XNP_STAT" : ""),
 	       ( ( an_status & BGX_SPU_AN_STATUS_PAGE_RX ) ? " PAGE_RX" : "" ),
 	       ( ( an_status & BGX_SPU_AN_STATUS_AN_COMPLETE ) ?
@@ -805,8 +805,8 @@ txnic_lmac_diag ( struct txnic_lmac *lmac ) {
 		 " LP_AN_ABLE" : "" ) );
 
 	/* Read transmit statistics */
-	DBGC ( vnic, "TXNIC %s TXF xc %#llx xd %#llx mc %#llx sc %#llx ok "
-	       "%#llx bc %#llx mc %#llx un %#llx pa %#llx\n", vnic->name,
+	DBGC ( vnic, "TXNIC %s TXF xc %#"INT64_MODIFIER"x xd %#"INT64_MODIFIER"x mc %#"INT64_MODIFIER"x sc %#"INT64_MODIFIER"x ok "
+	       "%#"INT64_MODIFIER"x bc %#"INT64_MODIFIER"x mc %#"INT64_MODIFIER"x un %#"INT64_MODIFIER"x pa %#"INT64_MODIFIER"x\n", vnic->name,
 	       readq ( lmac->regs + BGX_CMR_TX_STAT0 ),
 	       readq ( lmac->regs + BGX_CMR_TX_STAT1 ),
 	       readq ( lmac->regs + BGX_CMR_TX_STAT2 ),
@@ -816,8 +816,8 @@ txnic_lmac_diag ( struct txnic_lmac *lmac ) {
 	       readq ( lmac->regs + BGX_CMR_TX_STAT15 ),
 	       readq ( lmac->regs + BGX_CMR_TX_STAT16 ),
 	       readq ( lmac->regs + BGX_CMR_TX_STAT17 ) );
-	DBGC ( vnic, "TXNIC %s TXB ok %#llx hist %#llx:%#llx:%#llx:%#llx:"
-	       "%#llx:%#llx:%#llx:%#llx\n", vnic->name,
+	DBGC ( vnic, "TXNIC %s TXB ok %#"INT64_MODIFIER"x hist %#"INT64_MODIFIER"x:%#"INT64_MODIFIER"x:%#"INT64_MODIFIER"x:%#"INT64_MODIFIER"x:"
+	       "%#"INT64_MODIFIER"x:%#"INT64_MODIFIER"x:%#"INT64_MODIFIER"x:%#"INT64_MODIFIER"x\n", vnic->name,
 	       readq ( lmac->regs + BGX_CMR_TX_STAT4 ),
 	       readq ( lmac->regs + BGX_CMR_TX_STAT6 ),
 	       readq ( lmac->regs + BGX_CMR_TX_STAT7 ),
@@ -829,16 +829,16 @@ txnic_lmac_diag ( struct txnic_lmac *lmac ) {
 	       readq ( lmac->regs + BGX_CMR_TX_STAT13 ) );
 
 	/* Read receive statistics */
-	DBGC ( vnic, "TXNIC %s RXF ok %#llx pa %#llx nm %#llx ov %#llx er "
-	       "%#llx nc %#llx\n", vnic->name,
+	DBGC ( vnic, "TXNIC %s RXF ok %#"INT64_MODIFIER"x pa %#"INT64_MODIFIER"x nm %#"INT64_MODIFIER"x ov %#"INT64_MODIFIER"x er "
+	       "%#"INT64_MODIFIER"x nc %#"INT64_MODIFIER"x\n", vnic->name,
 	       readq ( lmac->regs + BGX_CMR_RX_STAT0 ),
 	       readq ( lmac->regs + BGX_CMR_RX_STAT2 ),
 	       readq ( lmac->regs + BGX_CMR_RX_STAT4 ),
 	       readq ( lmac->regs + BGX_CMR_RX_STAT6 ),
 	       readq ( lmac->regs + BGX_CMR_RX_STAT8 ),
 	       readq ( lmac->regs + BGX_CMR_RX_STAT9 ) );
-	DBGC ( vnic, "TXNIC %s RXB ok %#llx pa %#llx nm %#llx ov %#llx nc "
-	       "%#llx\n", vnic->name,
+	DBGC ( vnic, "TXNIC %s RXB ok %#"INT64_MODIFIER"x pa %#"INT64_MODIFIER"x nm %#"INT64_MODIFIER"x ov %#"INT64_MODIFIER"x nc "
+	       "%#"INT64_MODIFIER"x\n", vnic->name,
 	       readq ( lmac->regs + BGX_CMR_RX_STAT1 ),
 	       readq ( lmac->regs + BGX_CMR_RX_STAT3 ),
 	       readq ( lmac->regs + BGX_CMR_RX_STAT5 ),
@@ -881,7 +881,7 @@ static void txnic_lmac_poll_link ( struct txnic_lmac *lmac ) {
 	intr = readq ( lmac->regs + BGX_SPU_INT );
 	if ( ! intr )
 		return;
-	DBGC ( vnic, "TXNIC %s INT %04llx%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s\n",
+	DBGC ( vnic, "TXNIC %s INT %04"INT64_MODIFIER"x%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s\n",
 	       vnic->name, intr,
 	       ( ( intr & BGX_SPU_INT_TRAINING_FAIL ) ? " TRAINING_FAIL" : "" ),
 	       ( ( intr & BGX_SPU_INT_TRAINING_DONE ) ? " TRAINING_DONE" : "" ),

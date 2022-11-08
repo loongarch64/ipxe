@@ -75,7 +75,7 @@ static userptr_t efi_urealloc ( userptr_t old_ptr, size_t new_size ) {
 		new_ptr = phys_to_user ( phys_addr + EFI_PAGE_SIZE );
 		copy_to_user ( new_ptr, -EFI_PAGE_SIZE,
 			       &new_size, sizeof ( new_size ) );
-		DBG ( "EFI allocated %d pages at %llx\n",
+		DBG ( "EFI allocated %d pages at %"UINT64_FORMAT"x\n",
 		      new_pages, phys_addr );
 	}
 
@@ -93,13 +93,13 @@ static userptr_t efi_urealloc ( userptr_t old_ptr, size_t new_size ) {
 		phys_addr = user_to_phys ( old_ptr, -EFI_PAGE_SIZE );
 		if ( ( efirc = bs->FreePages ( phys_addr, old_pages ) ) != 0 ){
 			rc = -EEFI ( efirc );
-			DBG ( "EFI could not free %d pages at %llx: %s\n",
+			DBG ( "EFI could not free %d pages at %"UINT64_FORMAT"x: %s\n",
 			      old_pages, phys_addr, strerror ( rc ) );
 			/* Not fatal; we have leaked memory but successfully
 			 * allocated (if asked to do so).
 			 */
 		}
-		DBG ( "EFI freed %d pages at %llx\n", old_pages, phys_addr );
+		DBG ( "EFI freed %d pages at %"UINT64_FORMAT"x\n", old_pages, phys_addr );
 	}
 
 	return new_ptr;

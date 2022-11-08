@@ -494,7 +494,7 @@ static enum vxge_hw_status __vxge_hw_vpath_alarm_process(
 				&vp_reg->asic_ntwk_vp_err_reg);
 		}
 	} else {
-		vxge_debug(VXGE_INFO, "%s: %s:%d unhandled alarm %llx\n",
+		vxge_debug(VXGE_INFO, "%s: %s:%d unhandled alarm %"UINT64_FORMAT"x\n",
 				hldev->ndev->name, __func__, __LINE__,
 				alarm_status);
 	}

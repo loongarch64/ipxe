@@ -156,7 +156,7 @@ efi_block_io_read ( EFI_BLOCK_IO_PROTOCOL *block_io, UINT32 media __unused,
 	struct san_device *sandev = block->sandev;
 	int rc;
 
-	DBGC2 ( sandev, "EFIBLK %#02x read LBA %#08llx to %p+%#08zx\n",
+	DBGC2 ( sandev, "EFIBLK %#02x read LBA %#08"INT64_MODIFIER"x to %p+%#08zx\n",
 		sandev->drive, lba, data, ( ( size_t ) len ) );
 	efi_snp_claim();
 	rc = efi_block_rw ( sandev, lba, data, len, sandev_read );
@@ -182,7 +182,7 @@ efi_block_io_write ( EFI_BLOCK_IO_PROTOCOL *block_io, UINT32 media __unused,
 	struct san_device *sandev = block->sandev;
 	int rc;
 
-	DBGC2 ( sandev, "EFIBLK %#02x write LBA %#08llx from %p+%#08zx\n",
+	DBGC2 ( sandev, "EFIBLK %#02x write LBA %#08"INT64_MODIFIER"x from %p+%#08zx\n",
 		sandev->drive, lba, data, ( ( size_t ) len ) );
 	efi_snp_claim();
 	rc = efi_block_rw ( sandev, lba, data, len, sandev_write );

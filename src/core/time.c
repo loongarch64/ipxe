@@ -136,7 +136,7 @@ time_t mktime ( struct tm *tm ) {
 	seconds = ( ( ( ( time_t ) days_since_epoch ) * ( ( time_t ) 86400 ) ) +
 		    seconds_since_day );
 
-	DBGC ( &weekdays, "TIME %04d-%02d-%02d %02d:%02d:%02d => %lld (%s, "
+	DBGC ( &weekdays, "TIME %04d-%02d-%02d %02d:%02d:%02d => %"INT64_FORMAT"d (%s, "
 	       "day %d)\n", ( tm->tm_year + 1900 ), ( tm->tm_mon + 1 ),
 	       tm->tm_mday, tm->tm_hour, tm->tm_min, tm->tm_sec, seconds,
 	       weekdays[ tm->tm_wday ], tm->tm_yday );
