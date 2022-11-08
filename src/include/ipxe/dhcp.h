@@ -302,6 +302,10 @@ enum dhcp_client_architecture_values {
 	DHCP_CLIENT_ARCHITECTURE_ARM32 = 0x000a,
 	/** EFI 64-bit ARM */
 	DHCP_CLIENT_ARCHITECTURE_ARM64 = 0x000b,
+    /* EFI 32-bit LoongArch */
+	DHCP_CLIENT_ARCHITECTURE_LOONGARCH32 = 0x0025,
+    /* EFI 64-bit LoongArch */
+	DHCP_CLIENT_ARCHITECTURE_LOONGARCH64 = 0x0027,
 };
 
 /** Client network device interface */
